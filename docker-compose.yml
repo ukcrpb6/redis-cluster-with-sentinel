@@ -24,10 +24,22 @@ services:
       mode: replicated
       replicas: 3
 
-  haproxy:
+  haproxy1:
     image: haproxy:alpine
     volumes:
       - "./haproxy:/usr/local/etc/haproxy:ro"
     ports:
       - "6379:6379"
-      - "80:8080"
+      - "8081:8080"
+    depends_on:
+      - master
+
+  haproxy2:
+    image: haproxy:alpine
+    volumes:
+      - "./haproxy:/usr/local/etc/haproxy:ro"
+    ports:
+      - "16379:6379"
+      - "8082:8080"
+    depends_on:
+      - master
